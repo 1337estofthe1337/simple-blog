@@ -36,10 +36,13 @@ No external APIs are used in this project.
 
 The Express server will handle the following routes:
 
-- `POST /articles`: Create a new article.
-- `GET /articles`: Retrieve all articles for a user.
-- `PUT /articles/:id`: Update an existing article.
-- `DELETE /articles/:id`: Delete a specific article.
+- `GET /`: User login.
+- `GET /:username`: User's blog (user's homepage).
+- `GET /:username/articles`: List of all user's articles by title.
+- `GET /:username/:article`: User-selected article.
+- `POST /:username/articles`: Create an article to publish.
+- `PUT /:username/:article`: Edit an article.
+- `DELETE /:username/:article`: Delete an article.
 
 ## Database Schema
 
