@@ -12,6 +12,19 @@ app.use(cors());
 ///////////////////// To Parse JSON Bodies
 app.use(express.json());
 
+///////////////////// Create User Login
+app.post('/', async (req, res) => {
+    try {
+        const { username, blogname } = req.body;
+        const newUser = await pool.query(
+            'INSERT INTO users (username, blogname) VALUES($1, $2)', 
+            [username, blogname]
+        );
+        res.json(newUser);
+    } catch (err) {
+        console.error('There was an error posting to / with error: ', err.message);
+    }
+})
 ///////////////////// User Login
 app.get('/', (req, res) => {
     res.send('Welcome to Simple Blog API. Please login');
