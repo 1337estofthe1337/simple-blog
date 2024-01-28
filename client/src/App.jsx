@@ -4,13 +4,13 @@ import viteLogo from '/vite.svg';
 import './App.css';
 
 // components
-import Login from './components/login.jsx';
+import CreateLogin from './components/createLogin.jsx';
 
 function App() {
 
     return (
         <div>
-            <Login />
+            <CreateLogin />
         </div>
     );
 }
