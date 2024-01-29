@@ -5,8 +5,8 @@ import './App.css';
 // components
 import Login from './components/login.jsx';
 import CreateLogin from './components/createLogin.jsx';
+import Homepage from './components/homepage.jsx';
 import CreateArticle from './components/createArticle.jsx';
-import AllArticles from './components/allArticles.jsx';
 import Article from './components/article.jsx';
 import EditArticle from './components/editArticle.jsx';
 
@@ -17,8 +17,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/create-login" element={<CreateLogin />} />
-                <Route path="/:username" element={<CreateArticle />} />
-                <Route path="/:username/articles" element={<AllArticles />} />
+                <Route path="/:username/" element={<Homepage />} />
+                <Route path="/:username/create-article" element={<CreateArticle />} />
                 <Route path="/:username/:articleTitle" element={<Article />} />
                 <Route path="/:username/:articleTitle/edit" element={<EditArticle />} />
             </Routes>
