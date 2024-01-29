@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateArticle = () => {
     
+    const { username } = useParams(); // gets username from URL parameter
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const navigate = useNavigate();
@@ -10,7 +11,9 @@ const CreateArticle = () => {
     const onSubmitForm = async(event) => {
         event.preventDefault();
         try {
+            console.log("step");
             const body = { title, content };
+            console.log("step");
             const response = await fetch(`http://localhost:8000/${username}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
