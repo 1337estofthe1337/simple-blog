@@ -4,3 +4,14 @@
     padding: 2rem;
     text-align: center;
 }
+
+.articles-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+th, td {
+    border: 1px solid lightblue;
+    padding: 8px;
+}

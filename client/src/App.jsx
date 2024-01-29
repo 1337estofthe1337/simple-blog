@@ -1,17 +1,20 @@
-import React, { useState, Fragment } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 // components
 import CreateLogin from './components/createLogin.jsx';
+import CreateArticle from './components/createArticle.jsx';
 
 function App() {
 
     return (
-        <div>
-            <CreateLogin />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<CreateLogin />} />
+                <Route path="/:username" element={<CreateArticle />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

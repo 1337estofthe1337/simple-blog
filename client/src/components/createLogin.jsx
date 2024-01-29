@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateLogin = () => {
 
     const [username, setUsername] = useState("");
     const [blogname, setBlogname] = useState("");
+    const navigate = useNavigate();
 
     const onSubmitForm = async(event) => {
         event.preventDefault();
@@ -15,6 +17,8 @@ const CreateLogin = () => {
                 body: JSON.stringify(body)
             });
             console.log(response);
+            // refreshes the page to username once logged in
+            navigate(`/${username}`);
             
         } catch (err) {
             console.error(err.message);
@@ -38,6 +42,7 @@ const CreateLogin = () => {
                     onChange={event => setUsername(event.target.value)}
                     />
                 </div>
+                <div>
                     <label htmlFor="blogname" className="create-blogname-label">
                         Blogname -
                     </label>
@@ -49,7 +54,6 @@ const CreateLogin = () => {
                     value={blogname} 
                     onChange={event => setBlogname(event.target.value)}
                     />
-                <div>
                 </div>
                 <button className="create-user-button">Submit</button>
             </form>
