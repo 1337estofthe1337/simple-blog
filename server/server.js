@@ -12,6 +12,18 @@ app.use(cors());
 ///////////////////// To Parse JSON Bodies
 app.use(express.json());
 
+///////////////////// User Login
+app.get('/', async (req, res) => {
+    try {
+        // Fetch users from the database for dropdown menu
+        const users = await pool.query('SELECT * FROM users');
+        res.json(users.rows);
+    } catch (err) {
+        console.error('Error fetching users:', err.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 ///////////////////// Create User Login
 app.post('/', async (req, res) => {
     try {
@@ -25,6 +37,24 @@ app.post('/', async (req, res) => {
         console.error('There was an error posting to / with error: ', err.message);
     }
 })
+
+///////////////////// List of All User's Articles by Title
+app.get('/:username/articles', async (req, res) => {
+    try {
+        const { username } = req.params;
+        // Retrieve all articles for the specified user from the database
+        const userArticles = await pool.query(
+            'SELECT * FROM articles WHERE user_id = (SELECT user_id FROM users WHERE username = $1)',
+            [username]
+        );
+
+        res.json(userArticles.rows);
+            
+    } catch (err) {
+        console.error('Error retrieving articles:', err.message);
+        res.status(500).json({ error: 'Failed to retrieve articles' });
+    }
+});
 
 ///////////////////// Create an Article to Publish
 app.post('/:username/', async (req, res) => {
@@ -48,24 +78,6 @@ app.post('/:username/', async (req, res) => {
 
     } catch (err) {
         console.error(err.message);
-    }
-});
-
-///////////////////// List of All User's Articles by Title
-app.get('/:username/articles', async (req, res) => {
-    try {
-        const { username } = req.params;
-        // Retrieve all articles for the specified user from the database
-        const userArticles = await pool.query(
-            'SELECT * FROM articles WHERE user_id = (SELECT user_id FROM users WHERE username = $1)',
-            [username]
-        );
-
-        res.json(userArticles.rows);
-            
-    } catch (err) {
-        console.error('Error retrieving articles:', err.message);
-        res.status(500).json({ error: 'Failed to retrieve articles' });
     }
 });
 
@@ -114,28 +126,26 @@ app.put('/:username/:article', async (req, res) => {
     }
 });
 
-///////////////////// User Login
-app.get('/', async (req, res) => {
-    try {
-        // Fetch users from the database for dropdown menu
-        const users = await pool.query('SELECT * FROM users');
-        res.json(users.rows);
-    } catch (err) {
-        console.error('Error fetching users:', err.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-///////////////////// User Blog (User's Homepage)
-app.get('/:username', (req, res) => {
-    const { username } = req.params;
-    res.send(`Welcome to your blog, ${username}!`);
-});
-
 ///////////////////// Delete an Article
-app.delete('/:username/:article', (req, res) => {
-    const { username, article } = req.params;
-    // Delete the specified article from the database
+app.delete('/:username/:article', async (req, res) => {
+    try {
+        const { username, article } = req.params;
+
+        // Delete the specified article from the database
+        const deletedArticle = await pool.query(
+            'DELETE FROM articles WHERE user_id = (SELECT user_id FROM users WHERE username = $1) AND title = $2 RETURNING *',
+            [username, article]
+        );
+
+        if (deletedArticle.rowCount === 0) {
+            return res.status(404).json({ message: 'Article not found or you are not authorized to delete this article' });
+        }
+
+        res.json({ message: 'Article deleted successfully', deletedArticle: deletedArticle.rows[0] });
+    } catch (err) {
+        console.error('Error deleting article:', err.message);
+        return res.status(500).json({ error: 'Faield to delete article' });
+    }
 });
 
 ///////////////////// Start Server

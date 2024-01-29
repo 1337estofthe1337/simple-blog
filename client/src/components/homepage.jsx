@@ -19,6 +19,24 @@ const Homepage = () => {
         fetchArticles();
     }, [username]);
 
+    const handleDelete = async (articleTitle) => {
+        if (window.confirm("Are you sure you want to delete this article")) {
+            try {
+                const response = await fetch(`http://localhost:8000/${username}/${articleTitle}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    // Remove the deleted article form the state
+                    setArticles(articles.filter(article => article.title !== articleTitle));
+                } else {
+                    console.error('Failed to delete article');
+                }
+            } catch (err) {
+                console.error('Error deleting article:', err.message);
+            }
+        }
+    };
+
     return (
         <Fragment>
             <h1>All Articles for {username}</h1>
@@ -30,6 +48,7 @@ const Homepage = () => {
                         <th>Content</th>
                         <th>Read</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +65,9 @@ const Homepage = () => {
                                 <Link to={`/${username}/${article.title}/edit`}>
                                     <button>Edit</button>
                                 </Link>
+                            </td>
+                            <td>
+                                <button onClick={() => handleDelete(article.title)}>Delete</button>
                             </td>
                         </tr>
                     ))}

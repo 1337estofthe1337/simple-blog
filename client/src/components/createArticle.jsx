@@ -19,7 +19,7 @@ const CreateArticle = () => {
             });
             console.log(response);
             // refreshes the page to where all their articles are
-            navigate(`/${username}/articles`)
+            navigate(`/${username}`)
         } catch (err) {
             console.error(err.message);
         }
