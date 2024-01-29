@@ -25,6 +25,32 @@ app.post('/', async (req, res) => {
         console.error('There was an error posting to / with error: ', err.message);
     }
 })
+
+///////////////////// Create an Article to Publish
+app.post('/:username/', async (req, res) => {
+    try {
+        const { username } = req.params;
+        const { title, content } = req.body;
+        
+        // get user_id based on username
+        const user = await pool.query(
+            'SELECT user_id FROM users WHERE username = $1', 
+            [username]);
+        const userId = user.rows[0].user_id;
+
+        // Insert new article into database
+        const newArticle = await pool.query(
+            'INSERT INTO articles (user_id, title, content) VALUES($1, $2, $3) RETURNING *',
+            [userId, title, content]
+        );
+
+        res.json(newArticle.rows[0]);
+
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 ///////////////////// User Login
 app.get('/', (req, res) => {
     res.send('Welcome to Simple Blog API. Please login');
@@ -47,13 +73,6 @@ app.get('/:username/articles', (req, res) => {
 app.get('/:username/:article', (req, res) => {
     const { username, article } = req.params;
     res.send(`Viewing ${article} from ${username}'s articles`);
-});
-
-///////////////////// Create an Article to Publish
-app.post('/:username/articles', (req, res) => {
-    const { username } = req.params;
-    const { title, content } = req.body;
-    // Insert the new article into the database
 });
 
 ///////////////////// Edit an Article
