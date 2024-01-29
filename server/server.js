@@ -51,6 +51,24 @@ app.post('/:username/', async (req, res) => {
     }
 });
 
+///////////////////// List of All User's Articles by Title
+app.get('/:username/articles', async (req, res) => {
+    try {
+        const { username } = req.params;
+        // Retrieve all articles for the specified user from the database
+        const userArticles = await pool.query(
+            'SELECT * FROM articles WHERE user_id = (SELECT user_id FROM users WHERE username = $1)',
+            [username]
+        );
+
+        res.json(userArticles.rows);
+            
+    } catch (err) {
+        console.error('Error retrieving articles:', err.message);
+        res.status(500).json({ error: 'Failed to retrieve articles' });
+    }
+});
+
 ///////////////////// User Login
 app.get('/', (req, res) => {
     res.send('Welcome to Simple Blog API. Please login');
@@ -60,13 +78,6 @@ app.get('/', (req, res) => {
 app.get('/:username', (req, res) => {
     const { username } = req.params;
     res.send(`Welcome to your blog, ${username}!`);
-});
-
-///////////////////// List of All User's Articles by Title
-app.get('/:username/articles', (req, res) => {
-    const { username } = req.params;
-    // Retrieve all articles for the specified user from the database
-    res.send(`Here is a list of all your articles, ${username}!`);
 });
 
 ///////////////////// View User Selected Article
