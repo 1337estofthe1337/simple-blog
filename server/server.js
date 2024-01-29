@@ -69,6 +69,28 @@ app.get('/:username/articles', async (req, res) => {
     }
 });
 
+///////////////////// View User Selected Article
+app.get('/:username/:article', async (req, res) => {
+    try {
+        const { username, article } = req.params;
+        
+        // Retrieve specified article for user from the database
+        const userArticle = await pool.query(
+            'SELECT * FROM articles WHERE user_id = (SELECT user_id FROM users WHERE username = $1) AND title = $2',
+            [username, article]
+        );
+
+        if (userArticle.rows.length === 0) {
+            return res.status(404).json({ message: 'Article not found' });
+        }
+        // return a single article
+        res.json(userArticle.rows[0]);
+    } catch (err) {
+        console.error('Error retrieving article:', err.message);
+        res.status(500).json({ error: 'Failed to retrieve article' });
+    }
+});
+
 ///////////////////// User Login
 app.get('/', (req, res) => {
     res.send('Welcome to Simple Blog API. Please login');
@@ -78,12 +100,6 @@ app.get('/', (req, res) => {
 app.get('/:username', (req, res) => {
     const { username } = req.params;
     res.send(`Welcome to your blog, ${username}!`);
-});
-
-///////////////////// View User Selected Article
-app.get('/:username/:article', (req, res) => {
-    const { username, article } = req.params;
-    res.send(`Viewing ${article} from ${username}'s articles`);
 });
 
 ///////////////////// Edit an Article

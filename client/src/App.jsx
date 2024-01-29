@@ -6,6 +6,7 @@ import './App.css';
 import CreateLogin from './components/createLogin.jsx';
 import CreateArticle from './components/createArticle.jsx';
 import AllArticles from './components/allArticles.jsx';
+import Article from './components/article.jsx';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/" element={<CreateLogin />} />
                 <Route path="/:username" element={<CreateArticle />} />
                 <Route path="/:username/articles" element={<AllArticles />} />
+                <Route path="/:username/:articleTitle" element={<Article />} />
             </Routes>
         </BrowserRouter>
     );

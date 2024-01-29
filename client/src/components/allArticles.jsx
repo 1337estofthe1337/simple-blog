@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const AllArticles = () => {
     const { username } = useParams();
@@ -27,6 +27,7 @@ const AllArticles = () => {
                     <tr>
                         <th>Title</th>
                         <th>Content</th>
+                        <th>Read</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,11 @@ const AllArticles = () => {
                         <tr key={article.article_id}>
                             <td>{article.title}</td>
                             <td>{article.content}</td>
+                            <td>
+                                <Link to={`/${username}/${article.title}`}>
+                                    <button>Read</button>
+                                </Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
