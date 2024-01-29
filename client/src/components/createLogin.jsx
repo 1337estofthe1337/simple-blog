@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreateLogin = () => {
 
@@ -57,6 +57,7 @@ const CreateLogin = () => {
                 </div>
                 <button className="create-user-button">Submit</button>
             </form>
+            <p>You remembered your username? <Link to="/">Sign in</Link></p>
         </Fragment>
     );
 }

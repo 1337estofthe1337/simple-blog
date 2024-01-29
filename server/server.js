@@ -115,8 +115,15 @@ app.put('/:username/:article', async (req, res) => {
 });
 
 ///////////////////// User Login
-app.get('/', (req, res) => {
-    res.send('Welcome to Simple Blog API. Please login');
+app.get('/', async (req, res) => {
+    try {
+        // Fetch users from the database for dropdown menu
+        const users = await pool.query('SELECT * FROM users');
+        res.json(users.rows);
+    } catch (err) {
+        console.error('Error fetching users:', err.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 ///////////////////// User Blog (User's Homepage)

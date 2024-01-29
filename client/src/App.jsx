@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 // components
+import Login from './components/login.jsx';
 import CreateLogin from './components/createLogin.jsx';
 import CreateArticle from './components/createArticle.jsx';
 import AllArticles from './components/allArticles.jsx';
@@ -14,7 +15,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<CreateLogin />} />
+                <Route path="/" element={<Login />} />
+                <Route path="/create-login" element={<CreateLogin />} />
                 <Route path="/:username" element={<CreateArticle />} />
                 <Route path="/:username/articles" element={<AllArticles />} />
                 <Route path="/:username/:articleTitle" element={<Article />} />
