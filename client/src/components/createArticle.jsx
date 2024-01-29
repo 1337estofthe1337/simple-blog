@@ -11,9 +11,7 @@ const CreateArticle = () => {
     const onSubmitForm = async(event) => {
         event.preventDefault();
         try {
-            console.log("step");
             const body = { title, content };
-            console.log("step");
             const response = await fetch(`http://localhost:8000/${username}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

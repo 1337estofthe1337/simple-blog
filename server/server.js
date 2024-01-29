@@ -91,6 +91,29 @@ app.get('/:username/:article', async (req, res) => {
     }
 });
 
+///////////////////// Edit an Article
+app.put('/:username/:article', async (req, res) => {
+    try {
+        const { username, article } = req.params;
+        const { title, content } = req.body;
+
+        // Update the specified article in the database
+        const updatedArticle = await pool.query(
+            'UPDATE articles SET title = $1, content = $2 WHERE user_id = (SELECT user_id FROM users WHERE username = $3) AND title = $4 RETURNING *',
+            [title, content, username, article]
+        );
+
+        if (updatedArticle.rowCount === 0) {
+            return res.status(404).json({ message: 'Article not found or you are not authorized to edit this article' });
+        }
+
+        res.json({ message: 'Article updated successfully', updatedArticle: updatedArticle.rows[0] });
+    } catch (err) {
+        console.error('Error editing article:', err.message);
+        res.status(500).json({ error: 'Failed to edit article' });
+    }
+});
+
 ///////////////////// User Login
 app.get('/', (req, res) => {
     res.send('Welcome to Simple Blog API. Please login');
@@ -100,13 +123,6 @@ app.get('/', (req, res) => {
 app.get('/:username', (req, res) => {
     const { username } = req.params;
     res.send(`Welcome to your blog, ${username}!`);
-});
-
-///////////////////// Edit an Article
-app.put('/:username/:article', (req, res) => {
-    const { username, article } = req.params;
-    const { title, content } = req.body;
-    // Update the specified article in the database
 });
 
 ///////////////////// Delete an Article

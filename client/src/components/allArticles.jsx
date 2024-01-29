@@ -28,6 +28,7 @@ const AllArticles = () => {
                         <th>Title</th>
                         <th>Content</th>
                         <th>Read</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +39,11 @@ const AllArticles = () => {
                             <td>
                                 <Link to={`/${username}/${article.title}`}>
                                     <button>Read</button>
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to={`/${username}/${article.title}/edit`}>
+                                    <button>Edit</button>
                                 </Link>
                             </td>
                         </tr>
