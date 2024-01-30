@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const ReadArticle = () => {
     const { username, articleTitle } = useParams();
@@ -27,7 +28,7 @@ const ReadArticle = () => {
                 // If article is truthy i.e. has fetched value
                 <div>
                     <h1>{article.title}</h1>
-                    <p>{article.content}</p>
+                    <ReactMarkdown>{article.content}</ReactMarkdown>
                 </div>
             ) : (
                 // If falsy i.e. null and isn't fetched

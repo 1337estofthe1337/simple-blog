@@ -8,6 +8,7 @@ const CreateArticle = () => {
     const [content, setContent] = useState("");
     const navigate = useNavigate();
 
+    // Post request to server on submit
     const onSubmitForm = async(event) => {
         event.preventDefault();
         try {
