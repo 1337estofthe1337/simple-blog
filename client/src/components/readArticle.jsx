@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-const Article = () => {
+const ReadArticle = () => {
     const { username, articleTitle } = useParams();
     const [article, setArticle] = useState(null); // why null?
 
@@ -21,16 +21,20 @@ const Article = () => {
 
     return (
         <Fragment>
+            {/* Conditional rendering based on the state of article */}
+            <p><Link to={`/${username}`}>Go back home</Link></p>
             {article ? (
+                // If article is truthy i.e. has fetched value
                 <div>
                     <h1>{article.title}</h1>
                     <p>{article.content}</p>
                 </div>
             ) : (
+                // If falsy i.e. null and isn't fetched
                 <p>Loading article...</p>
             )}
         </Fragment>
     );
 }
 
-export default Article;
+export default ReadArticle;
