@@ -7,7 +7,9 @@ const app = express();
 const port = 8000;
 
 ///////////////////// Enable Cors
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 
 ///////////////////// To Parse JSON Bodies
 app.use(express.json());

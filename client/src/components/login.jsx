@@ -14,7 +14,7 @@ const Login = () => {
     // Fetch the list of users from the server
     const fetchUserList = async () => {
         try {
-            const response = await fetch("http://localhost:8000/")
+            const response = await fetch("https://simple-blog-3kqm.onrender.com/")
             const data = await response.json();
             setUserList(data);
         } catch (err) {
