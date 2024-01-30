@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const EditArticle = () => {
     const { username, articleTitle } = useParams();
@@ -55,6 +55,7 @@ const EditArticle = () => {
     return (
         <Fragment>
             <h1>Edit Article: {articleTitle}</h1>
+            <p>Changed your mind? <Link to={`/${username}`}>Back home</Link></p>
             <form className="update-article-form" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="update-title" className="update-article-label">
