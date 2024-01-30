@@ -8,7 +8,7 @@ const Homepage = () => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/${username}/articles`);
+                const response = await fetch(`https://simple-blog-3kqm.onrender.com/${username}/articles`);
                 const data = await response.json();
                 setArticles(data);
             } catch(err) {
@@ -22,7 +22,7 @@ const Homepage = () => {
     const handleDelete = async (articleTitle) => {
         if (window.confirm("Are you sure you want to delete this article")) {
             try {
-                const response = await fetch(`http://localhost:8000/${username}/${articleTitle}`, {
+                const response = await fetch(`https://simple-blog-3kqm.onrender.com/${username}/${articleTitle}`, {
                     method: 'DELETE'
                 });
                 if (response.ok) {

@@ -8,7 +8,7 @@ const Article = () => {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/${username}/${articleTitle}`);
+                const response = await fetch(`https://simple-blog-3kqm.onrender.com/${username}/${articleTitle}`);
                 const data = await response.json();
                 setArticle(data);
             } catch (err) {

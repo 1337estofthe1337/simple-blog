@@ -11,7 +11,7 @@ const CreateLogin = () => {
         event.preventDefault();
         try {
             const body = { username, blogname };
-            const response = await fetch("http://localhost:8000/", {
+            const response = await fetch("https://simple-blog-3kqm.onrender.com/", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)

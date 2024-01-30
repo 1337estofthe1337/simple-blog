@@ -12,7 +12,7 @@ const CreateArticle = () => {
         event.preventDefault();
         try {
             const body = { title, content };
-            const response = await fetch(`http://localhost:8000/${username}`, {
+            const response = await fetch(`https://simple-blog-3kqm.onrender.com/${username}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
