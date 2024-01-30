@@ -55,6 +55,7 @@ const CreateArticle = () => {
                 </div>
                 <button className="create-article-button">Submit</button>
             </form>
+            <p>No saving feature available! Please save your work before going back! <Link to={`/${username}`}>Go back</Link></p>
         </Fragment>
     );
 }

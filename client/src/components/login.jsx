@@ -2,12 +2,13 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
+    // State variables
     const [username, setUsername] = useState("");
     const [userList, setUserList] = useState([]);
     const navigate = useNavigate();
 
+    // useEffect to fetch users from the server when the component mounts
     useEffect(() => {
-        // Fetch list of users when the component mounts
         fetchUserList();
     }, []);
 
@@ -16,12 +17,13 @@ const Login = () => {
         try {
             const response = await fetch("https://simple-blog-3kqm.onrender.com/")
             const data = await response.json();
-            setUserList(data);
+            setUserList(data); // server data to update state of userList
         } catch (err) {
             console.error('Error fetching user list:', err.message);
         }
     };
 
+    // handle for login submission
     const onSubmitForm = async (event) => {
         event.preventDefault();
         try {
