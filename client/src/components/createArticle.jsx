@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 const CreateArticle = () => {
     
+    // State variables
     const { username } = useParams(); // gets username from URL parameter
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
