@@ -40,6 +40,7 @@ const Homepage = () => {
     return (
         <Fragment>
             <h1>All Articles for {username}</h1>
+            <p>Done? <Link to={`/`}>Log out</Link></p>
             <p>Want to write an article? <Link to={`/${username}/create-article`}>New Article</Link></p>
             <table>
                 <thead>
